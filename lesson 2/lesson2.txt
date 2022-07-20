@@ -169,21 +169,13 @@ newdatabase=# SELECT title, first_name, phone, STATUS FROM member_applications W
  Mr.   | Selmer     | 800-969-7914   | COMPLETED
 (20 rows)
 
-newdatabase=# SELECT doctor_id, COUNT (doctor_id) FROM member_applications GROUP BY doctor_id ORDER BY doctor_id  DESC LIMIT 10;
- doctor_id | count
+newdatabase=# SELECT doctor_id, COUNT (doctor_id) FROM member_applications GROUP BY doctor_id ORDER BY count DESC LIMIT 3;
+ doctor_id | count 
 -----------+-------
-           |     0
-    211119 |     1
-    211108 |     2
-    209233 |     1
-    209214 |     1
-    208644 |     1
-    208185 |     1
-    205689 |     1
-    205487 |     3
     205474 |    13
-(10 rows)
-
+      9236 |    10
+      8260 |     9
+(3 rows)
 
 newdatabase=# SELECT title, first_name, phone,email FROM member_applications WHERE email LIKE '%gmail%'  LIMIT 20;
  title | first_name |     phone      |           email
