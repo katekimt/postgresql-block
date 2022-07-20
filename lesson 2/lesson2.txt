@@ -1,0 +1,487 @@
+newdatabase=# SELECT doctor_id FROM member_applications LIMIT 10;
+ doctor_id
+-----------
+     12308
+      6057
+      7853
+      8120
+
+      9806
+
+      5257
+
+     12814
+(10 rows)
+
+newdatabase=# SELECT id, doctor_id,user_id, mbi, dob FROM member_applications LIMIT 10;
+ id  | doctor_id | user_id |     mbi     |    dob
+-----+-----------+---------+-------------+------------
+ 363 |     12308 |    1016 | I2Y7AEFSG9S | 2010-01-07
+ 399 |      6057 |      40 | 1B8878EHEE3 | 1999-12-29
+ 427 |      7853 |    1410 | 35LF3NE8XR2 | 1999-10-08
+ 428 |      8120 |    2009 | EXJRUBAY0BY | 2018-05-26
+ 509 |           |    3162 | OMLZTU8XL6Q | 1980-11-20
+ 510 |      9806 |    3162 | VSB297E8GRT | 1993-06-03
+ 562 |           |    3081 |             |
+ 676 |      5257 |    1512 | DRE3S7JW67A | 2000-06-14
+ 677 |           |    3508 | X1N1KTI4S1P | 1987-10-16
+ 700 |     12814 |      40 | 7FQZ4Z7V3G1 | 1977-12-31
+(10 rows)
+
+newdatabase=# SELECT (CURRENT_DATE - dob)/365 age, id, doctor_id, user_id, dob FROM member_applications ORDER BY age DESC LIMIT 10;
+ age | id  | doctor_id | user_id | dob
+-----+-----+-----------+---------+-----
+     | 612 |           |    1531 |
+     | 652 |           |    1711 |
+     | 518 |           |      88 |
+     | 695 |           |    2543 |
+     | 465 |           |     504 |
+     | 562 |           |    3081 |
+     | 686 |           |    3070 |
+     | 711 |           |     460 |
+     | 712 |           |     460 |
+     | 561 |           |    1441 |
+(10 rows)
+
+newdatabase=# SELECT (CURRENT_DATE - dob)/365 age, id, doctor_id, user_id, dob FROM member_applications WHERE id < 200  ORDER BY age DESC LIMIT 10;
+ age | id  | doctor_id | user_id |    dob
+-----+-----+-----------+---------+------------
+     | 128 |           |    1327 |
+     | 175 |           |    1695 |
+     | 122 |           |    2570 |
+     | 129 |           |    1003 |
+     | 130 |           |    1558 |
+     |  48 |           |      62 |
+     |  67 |           |    2141 |
+     |  89 |           |    1632 |
+  52 | 158 |      8224 |    3132 | 1970-07-29
+  51 |  28 |      5207 |      38 | 1970-11-06
+(10 rows)
+
+newdatabase=# SELECT (CURRENT_DATE - dob)/365 age, id, doctor_id, user_id, dob FROM member_applications WHERE id < 50  ORDER BY age DESC LIMIT 10;
+ age | id | doctor_id | user_id |    dob
+-----+----+-----------+---------+------------
+     | 48 |           |      62 |
+  51 | 28 |      5207 |      38 | 1970-11-06
+  46 | 35 |      1461 |    2050 | 1976-06-20
+  44 | 41 |      1683 |      40 | 1978-07-25
+  43 | 26 |      1996 |      38 | 1979-05-30
+  42 | 38 |      2629 |      38 | 1979-11-15
+  42 | 33 |           |      38 | 1979-11-22
+  39 | 42 |      4801 |      40 | 1983-01-06
+  34 | 30 |      2591 |    1972 | 1988-02-08
+  32 | 45 |      2809 |     595 | 1989-12-21
+(10 rows)
+
+newdatabase=# SELECT (CURRENT_DATE - dob)/365 age, id, doctor_id, user_id, dob FROM member_applications WHERE id < 200  ORDER BY age DESC LIMIT 10 OFFSET 10;
+ age | id  | doctor_id | user_id |    dob
+-----+-----+-----------+---------+------------
+  51 | 139 |      5880 |    1435 | 1971-02-03
+  51 | 145 |           |      38 | 1970-11-17
+  50 |  93 |      4884 |      40 | 1972-04-23
+  49 |  84 |      2392 |      38 | 1973-06-30
+  49 |  79 |      1693 |      40 | 1973-05-12
+  49 | 149 |      8527 |     917 | 1972-10-23
+  49 |  95 |      1534 |      38 | 1973-04-02
+  49 | 138 |      5880 |    1435 | 1973-04-24
+  49 | 166 |      8395 |    2895 | 1972-10-28
+  49 | 191 |      9662 |      40 | 1972-10-29
+(10 rows)
+
+newdatabase=# SELECT id, doctor_id,user_id, mbi, dob FROM member_applications WHERE mbi = 'E3FV7SGMDQJ';
+ id  | doctor_id | user_id |     mbi     |    dob
+-----+-----------+---------+-------------+------------
+ 202 |      2156 |    2954 | E3FV7SGMDQJ | 2008-06-06
+(1 row)
+
+newdatabase=# SELECT id, doctor_id,user_id, mbi, dob, status FROM member_applications WHERE status = 'COMPLETED' LIMIT 20;
+ id  | doctor_id | user_id |     mbi     |    dob     |  status
+-----+-----------+---------+-------------+------------+-----------
+ 363 |     12308 |    1016 | I2Y7AEFSG9S | 2010-01-07 | COMPLETED
+ 399 |      6057 |      40 | 1B8878EHEE3 | 1999-12-29 | COMPLETED
+ 427 |      7853 |    1410 | 35LF3NE8XR2 | 1999-10-08 | COMPLETED
+ 428 |      8120 |    2009 | EXJRUBAY0BY | 2018-05-26 | COMPLETED
+ 510 |      9806 |    3162 | VSB297E8GRT | 1993-06-03 | COMPLETED
+ 676 |      5257 |    1512 | DRE3S7JW67A | 2000-06-14 | COMPLETED
+ 700 |     12814 |      40 | 7FQZ4Z7V3G1 | 1977-12-31 | COMPLETED
+ 701 |     12814 |      40 | HV4WHDDFV3S | 1988-11-05 | COMPLETED
+ 709 |      8264 |      40 | BEXG1SQZ6ZP | 1999-11-23 | COMPLETED
+ 710 |      5179 |    1510 | OH0C5OKRFL0 | 1985-10-16 | COMPLETED
+ 365 |      1683 |    2363 | 3G4QVLY8R44 | 2006-06-30 | COMPLETED
+ 744 |           |    1929 | T5ZIJH227XX | 1982-03-24 | COMPLETED
+ 366 |      6189 |    3109 | 0W5GFRI0P3A | 2004-08-20 | COMPLETED
+ 401 |      5734 |      40 | GNHNZT3BMXW | 2004-02-16 | COMPLETED
+ 402 |      5872 |    1369 | P07LC8YUBFB | 1977-02-13 | COMPLETED
+ 429 |      8170 |    2009 | P00T6GFWC9M | 2008-12-09 | COMPLETED
+ 464 |      8274 |    1883 | OP62WJS63RB | 1991-01-05 | COMPLETED
+ 602 |      9235 |      40 | O0A170JKSSW | 2015-08-26 | COMPLETED
+ 649 |      7903 |    3355 | EI53BIMW3DS | 2004-04-04 | COMPLETED
+ 678 |      5188 |    1003 | F9TXLZ09YLI | 1983-01-07 | COMPLETED
+(20 rows)
+
+newdatabase=# SELECT title, first_name, phone, STATUS FROM member_applications WHERE status = 'ARCHIVED' OR status = 'REJECTED'  LIMIT 20;
+ title | first_name |     phone      |  status
+-------+------------+----------------+----------
+ Mr.   |            |                | REJECTED
+ Mr.   |            |                | ARCHIVED
+ Ms.   | Kiana      | (844) 959-4213 | ARCHIVED
+ Mrs.  | Edd        |                | ARCHIVED
+ Mr.   | Kolby      |                | ARCHIVED
+ Ms.   | Jacky      | (888) 241-4223 | ARCHIVED
+ Mr.   |            |                | ARCHIVED
+ Mr.   | Alexie     | 1-877-754-3051 | ARCHIVED
+ Mrs.  | Audreanne  | (877) 561-3370 | ARCHIVED
+ Mr.   | Sim        | 1-855-808-2851 | REJECTED
+ Mr.   |            |                | ARCHIVED
+ Mr.   |            |                | REJECTED
+ Ms.   | Tina       | (800) 374-6042 | ARCHIVED
+ Mr.   | Scottie    | 866-207-6507   | ARCHIVED
+ Mr.   |            |                | ARCHIVED
+ Mr.   | Skye       | 855.994.0097   | ARCHIVED
+ Mrs.  | Princess   | 1-866-745-1454 | ARCHIVED
+ Ms.   | Leda       | 1-877-810-5181 | ARCHIVED
+ Mr.   | Leland     | 877-512-2370   | REJECTED
+ Mrs.  | Jacinto    | (855) 764-0517 | REJECTED
+(20 rows)
+
+newdatabase=# SELECT title, first_name, phone, STATUS FROM member_applications WHERE status != 'ARCHIVED' AND  status != 'REJECTED' AND status != 'DRAFT'  LIMIT 20;
+ title | first_name |     phone      |  status
+-------+------------+----------------+-----------
+ Mr.   | Kenneth    | 866-856-8920   | COMPLETED
+ Mrs.  | Valentina  | 800-503-6555   | COMPLETED
+ Ms.   | Tabitha    | 877.899.6122   | COMPLETED
+ Mr.   | Garret     | 844.609.7464   | COMPLETED
+ Mr.   | Jose       | (888) 591-4490 | COMPLETED
+ Mrs.  | Patience   | 1-888-536-0757 | COMPLETED
+ Mrs.  | Emily      | 844-269-8283   | COMPLETED
+ Mr.   | Jamarcus   | (877) 830-4443 | COMPLETED
+ Ms.   | Verdie     | 866.956.7635   | COMPLETED
+ Mrs.  | Frederique | (877) 348-6118 | COMPLETED
+ Mr.   | Guillermo  | 888.215.4758   | COMPLETED
+ Ms.   | Nellie     | 855.860.5582   | COMPLETED
+ Mr.   | Evan       | (888) 399-9857 | COMPLETED
+ Mr.   | Bo         | 1-844-757-3800 | COMPLETED
+ Mr.   | Antonetta  | 855-208-7817   | COMPLETED
+ Mrs.  | Antonietta | (844) 721-2353 | COMPLETED
+ Mr.   | King       | 1-844-615-8631 | COMPLETED
+ Mr.   | Dudley     | 800.242.0789   | COMPLETED
+ Mr.   | Bryon      | (855) 354-3141 | COMPLETED
+ Mr.   | Selmer     | 800-969-7914   | COMPLETED
+(20 rows)
+
+newdatabase=# SELECT doctor_id, COUNT (doctor_id) FROM member_applications GROUP BY doctor_id ORDER BY doctor_id  DESC LIMIT 10;
+ doctor_id | count
+-----------+-------
+           |     0
+    211119 |     1
+    211108 |     2
+    209233 |     1
+    209214 |     1
+    208644 |     1
+    208185 |     1
+    205689 |     1
+    205487 |     3
+    205474 |    13
+(10 rows)
+
+
+newdatabase=# SELECT title, first_name, phone,email FROM member_applications WHERE email LIKE '%gmail%'  LIMIT 20;
+ title | first_name |     phone      |           email
+-------+------------+----------------+----------------------------
+ Ms.   | Bret       | (866) 382-6312 | jaclyn.prosacco@gmail.com
+ Mr.   | Guillermo  | 888.215.4758   | urunte@gmail.com
+ Ms.   | Kiana      | (844) 959-4213 | nstreich@gmail.com
+ Ms.   | Ruby       | 866-613-3465   | kallie.spencer@gmail.com
+ Mr.   | Federico   | 888-693-6264   | owisoky@gmail.com
+ Mr.   | Kristofer  | 1-844-500-8580 | ogleason@gmail.com
+ Ms.   | Madaline   | 1-877-482-3742 | kemmer.roselyn@gmail.com
+ Mr.   | Dimitri    | (877) 628-6604 | walker.marion@gmail.com
+ Mr.   | Geraldine  | 1-888-964-1288 | cartwright.skyla@gmail.com
+ Mr.   | Jared      | 800-938-5569   | nhowe@gmail.com
+ Mrs.  | Maude      | 1-888-245-6395 | aurelio12@gmail.com
+ Ms.   | Joelle     | 888.739.1273   | gorczany.emerald@gmail.com
+ Ms.   | Anika      | 1-888-748-2880 | karianne32@gmail.com
+ Mr.   | Bill       | 1-855-682-2717 | zbradtke@gmail.com
+ Mrs.  | Sonia      | 1-877-542-8135 | darron90@gmail.com
+ Mr.   | Danial     | 855.418.4433   | agustin89@gmail.com
+ Ms.   | Sadye      | (866) 487-5014 | macie.koelpin@gmail.com
+ Mr.   | Fabian     | 866.265.1986   | rhianna.dietrich@gmail.com
+ Mr.   | Rhett      | (866) 359-0820 | fisher.khalid@gmail.com
+ Mr.   | Sheldon    | 888.654.3355   | thompson.josiah@gmail.com
+(20 rows)
+
+newdatabase=# SELECT first_name,  last_name, mbi, application_date FROM member_applications WHERE age(CURRENT_DATE, '2021-04-05') >age(CURRENT_DATE, application_date) AND signed_date IS NOT NULL  LIMIT 20;
+ first_name |  last_name  |     mbi     | application_date
+------------+-------------+-------------+------------------
+ Jazmin     | Anderson    | H1ER1OJMZK3 | 2021-04-11
+ Laurine    | Gutmann     | TUKQBNY9UDC | 2021-04-27
+ Bernie     | Bednar      | VXPBG476UKV | 2021-09-16
+ Olga       | Flatley     | DQ7WZDFMOLU | 2021-09-26
+ Stephan    | Gutkowski   | P3UO1W2W5PM | 2021-10-06
+ Dion       | Daniel      | 5T0DWLXBHH5 | 2021-09-20
+ Amir       | Stanton     | BDUV1CJFVOP | 2021-10-04
+ Augustus   | Greenholt   | MCM6UI8YENZ | 2021-10-04
+ Mavis      | Cormier     | VGJKKW1KWRO | 2021-10-08
+ Taylor     | Veum        | U2UR6B7UFC2 | 2021-10-08
+ Desmond    | Moore       | S46KA33843W | 2021-10-08
+ Braulio    | Gulgowski   | PSHIQU5XEOE | 2021-10-21
+ Jose       | O'Kon       | ES7DP1CZ17B | 2021-11-02
+ Tristian   | Steuber     | ZD332NQW5TG | 2021-11-25
+ Terrance   | Nitzsche    | W3OSO14R3IN | 2021-11-26
+ Kris       | Stoltenberg | H748MIU3USA | 2021-11-23
+ Lon        | Gulgowski   | WU4W6MZWT2Y | 2021-12-01
+ Devyn      | Watsica     | WX321VRLE0V | 2021-12-10
+ Gage       | Schuster    | D60GI6KCHEV | 2021-12-10
+ Murphy     | Ryan        | P6CL9MKRK80 | 2021-12-01
+(20 rows)
+
+newdatabase=# SELECT CONCAT (first_name, ' ', last_name) AS "full_name", physical_state FROM member_applications WHERE physical_state = 'UT' OR physical_state = 'NM' OR physical_state = 'AZ' LIMIT 20;
+     full_name      | physical_state
+--------------------+----------------
+ Kenneth Kunze      | AZ
+ Tabitha Quitzon    | AZ
+ Patience Hackett   | AZ
+ Frederique Streich | AZ
+ Antonetta Fadel    | AZ
+ Bryon Zieme        | AZ
+ Selmer Doyle       | AZ
+                    | AZ
+ Carli Purdy        | AZ
+ Nat Bednar         | AZ
+ Hugh Kuphal        | AZ
+ Ward Kuhn          | AZ
+ Myriam Macejkovic  | AZ
+ Westley Dooley     | AZ
+ Raymundo White     | UT
+ Chanelle Bauch     | AZ
+ Priscilla Dickens  | AZ
+ Jensen Howell      | AZ
+ Emelia Metz        | AZ
+ Ludwig Franecki    | AZ
+(20 rows)
+
+newdatabase=# SELECT physical_address1, physical_zip FROM member_applications WHERE physical_zip = '32766' OR physical_zip = '55359' OR physical_zip = '30642' OR physical_zip = '60158' OR physical_zip = '54229';
+        physical_address1         | physical_zip
+----------------------------------+--------------
+ 63820 Alva Rest                  | 32766
+ 4803 Arlo Port                   | 60158
+ 89428 Trenton Alley Suite 745    | 30642
+ 2219 Catherine Mission Suite 813 | 54229
+ 12192 Patsy Lock                 | 55359
+(5 rows)
+
+newdatabase=# SELECT id, first_name, email FROM member_applications WHERE receive_notifications = false AND  email = '' AND first_name != ''  ORDER BY first_name ASC LIMIT 20;
+  id  | first_name | email
+------+------------+-------
+ 8019 | Aaliyah    |
+  782 | Aaron      |
+ 7159 | Abagail    |
+ 2029 | Abagail    |
+ 2580 | Abbey      |
+ 2719 | Abbey      |
+ 7481 | Abbie      |
+ 1594 | Abbie      |
+ 8102 | Abbie      |
+ 3639 | Abbie      |
+ 1046 | Abbie      |
+ 1273 | Abbigail   |
+ 5483 | Abbigail   |
+ 3155 | Abbigail   |
+ 7295 | Abby       |
+ 3448 | Abby       |
+ 2971 | Abby       |
+ 6010 | Abdiel     |
+ 1864 | Abdiel     |
+ 3039 | Abdul      |
+(20 rows)
+
+newdatabase=# SELECT first_name,  last_name, phone FROM member_applications WHERE phone LIKE '%123';
+ first_name | last_name |     phone
+------------+-----------+----------------
+ Danika     | Kerluke   | (888) 751-4123
+ Hollis     | Kshlerin  | 800.544.2123
+ Danika     | Friesen   | 877.554.8123
+ Eveline    | Lockman   | 877-633-2123
+ Mina       | Heller    | 844.639.9123
+ Wendy      | Kulas     | 844.287.8123
+(6 rows)
+
+newdatabase=# SELECT first_name,  last_name, phone FROM member_applications WHERE phone LIKE '%333' OR phone LIKE '%333%' OR phone LIKE '333%';
+  first_name  | last_name  |     phone
+--------------+------------+----------------
+ Stuart       | Smitham    | 877-483-1333
+ Soledad      | Davis      | 844.333.3278
+ Rylan        | Lemke      | (800) 206-0333
+ Mona         | Quigley    | 800-967-1333
+ Josefa       | Stamm      | (888) 333-7566
+ Ariel        | Lynch      | 1-800-450-3332
+ Imogene      | Hintz      | 800-333-8183
+ Horace       | Nader      | 877.542.3334
+ Sandrine     | Jast       | 888.980.7333
+ Michale      | Olson      | (888) 838-0333
+ Kevin        | Glover     | 800.333.4932
+ Vincent      | Rutherford | 1-888-666-3337
+ Grayce       | Waters     | (877) 997-3334
+ Renee        | Trantow    | (800) 300-3331
+ Haven        | Weimann    | 1-800-333-6785
+ Johnny       | Waters     | 877-726-7333
+ Jewell       | Langosh    | 1-888-622-3338
+ Madelyn      | Daugherty  | 1-877-333-4653
+ Christ       | Dickinson  | 1-888-333-5786
+ Ludie        | Will       | 877-349-1333
+ Krystal      | Maggio     | (855) 919-9333
+ Alexandria   | Kihn       | (888) 531-3330
+ Katrine      | Willms     | 844-333-5961
+ Margaret     | Tromp      | 866-685-3331
+ Gwendolyn    | Rau        | 1-855-429-9333
+ Asdas Adaaaa | hhfgfh     | (122) 333-1111
+ sasad        |            | (333) 333-3333
+ Asdas Adaaaa |            | (122) 333-1111
+(28 rows)
+
+
+newdatabase=# SELECT DISTINCT first_name FROM member_applications ORDER BY first_name  LIMIT 20;
+ first_name
+------------
+
+ Aaliyah
+ Aaron
+ Abagail
+ Abbey
+ Abbie
+ Abbigail
+ Abby
+ Abdiel
+ Abdul
+ Abdullah
+ Abe
+ Abel
+ Abelardo
+ Abigail
+ Abigale
+ Abigayle
+ Abner
+ Abraham
+ Ada
+(20 rows)
+
+ delenewdatabase=# SELECT first_name, deleted, created, age(deleted, created) time FROM member_applications WHERE deleted IS NOT NULL AND age(deleted, created) < '01:00:00';
+ first_name |       deleted       |       created       |   time
+------------+---------------------+---------------------+----------
+ Edd        | 2021-02-14 01:33:07 | 2021-02-14 00:51:44 | 00:41:23
+ Kolby      | 2021-02-14 01:33:26 | 2021-02-14 01:26:04 | 00:07:22
+            | 2020-10-15 07:45:59 | 2020-10-15 07:44:39 | 00:01:20
+ Skye       | 2020-10-23 21:43:31 | 2020-10-23 21:39:11 | 00:04:20
+ Princess   | 2020-10-26 19:32:54 | 2020-10-26 19:32:20 | 00:00:34
+ Leda       | 2020-10-15 15:13:54 | 2020-10-15 15:10:25 | 00:03:29
+            | 2020-10-15 04:21:50 | 2020-10-15 04:21:26 | 00:00:24
+ Haylee     | 2020-10-23 23:49:39 | 2020-10-23 23:48:38 | 00:01:01
+ Layne      | 2020-11-07 00:09:30 | 2020-11-07 00:04:46 | 00:04:44
+ Joel       | 2020-10-15 15:13:49 | 2020-10-15 15:06:07 | 00:07:42
+ Kamron     | 2020-10-29 01:21:01 | 2020-10-29 01:20:00 | 00:01:01
+(11 rows)
+
+newdatabase=# SELECT first_name, last_name, phone, gender,physical_state FROM member_applications WHERE gender = 'M' AND physical_state = 'AZ' OR gender = 'F' AND physical_state = 'NM'  LIMIT 100;
+ first_name |  last_name  |     phone      | gender | physical_state
+------------+-------------+----------------+--------+----------------
+ Kenneth    | Kunze       | 866-856-8920   | M      | AZ
+ Bryon      | Zieme       | (855) 354-3141 | M      | AZ
+ Selmer     | Doyle       | 800-969-7914   | M      | AZ
+            |             |                | M      | AZ
+ Nat        | Bednar      | (866) 399-1748 | M      | AZ
+ Hugh       | Kuphal      | 866.549.2211   | M      | AZ
+ Westley    | Dooley      | 1-866-219-4654 | M      | AZ
+ Jensen     | Howell      | 877.438.6684   | M      | AZ
+ Ludwig     | Franecki    | 1-800-558-1696 | M      | AZ
+ Sofia      | Pagac       | 1-855-688-7125 | M      | AZ
+ Alene      | Jaskolski   | 888-740-9694   | M      | AZ
+ Orrin      | Funk        | (855) 903-0475 | M      | AZ
+ Nathan     | Walker      | (866) 292-2286 | M      | AZ
+ Frank      | Marvin      | 866-220-0521   | M      | AZ
+ Edwardo    | Rutherford  | 866-509-6681   | M      | AZ
+ Theron     | Thompson    | 844-674-0835   | M      | AZ
+ Lamont     | Predovic    | (877) 506-2334 | M      | AZ
+ Mathias    | Pacocha     | 1-800-999-2886 | M      | AZ
+ Myron      | Stiedemann  | 1-844-272-5822 | M      | AZ
+ Federico   | Hickle      | 888-693-6264   | M      | AZ
+ Leland     | Rowe        | 855.358.3710   | M      | AZ
+ Emmanuel   | Reilly      | (800) 816-7417 | M      | AZ
+ Jarrett    | Toy         | (888) 972-6338 | M      | AZ
+ Jalen      | Moen        | 855.746.8466   | M      | AZ
+ Orion      | Larson      | (877) 407-4050 | M      | AZ
+ Ned        | Langosh     | 1-888-819-7160 | M      | AZ
+ Talia      | Yost        | 855-563-7942   | M      | AZ
+ Samson     | Muller      | 800-396-4941   | M      | AZ
+ Stuart     | Smitham     | 877-483-1333   | M      | AZ
+ Frederik   | Blanda      | (877) 832-8073 | M      | AZ
+ Reyes      | Rosenbaum   | 800-913-9025   | M      | AZ
+ Bradly     | Adams       | 888-355-5344   | M      | AZ
+ Narciso    | Wyman       | 866-969-7810   | M      | AZ
+ Santos     | Miller      | 855-376-4419   | M      | AZ
+ Sterling   | Rohan       | (844) 680-0297 | M      | AZ
+ Kenna      | Ratke       | 1-855-900-0042 | M      | AZ
+ Austin     | Kulas       | (866) 937-4025 | M      | AZ
+ Bruce      | Kuhic       | 877-917-1715   | M      | AZ
+ Gillian    | Grady       | 877-772-3677   | M      | AZ
+ Sim        | Marks       | 1-855-808-2851 | M      | AZ
+ Roberto    | Kuphal      | 866-213-3539   | M      | AZ
+ Lew        | Satterfield | 877.258.7890   | M      | AZ
+ Logan      | Kozey       | 800.961.2447   | M      | AZ
+ Mustafa    | Crist       | 855-972-8104   | M      | AZ
+ Golden     | Nikolaus    | 1-866-828-4508 | M      | AZ
+ Branson    | Roberts     | 888.945.5628   | M      | AZ
+ Johann     | McCullough  |                | M      | AZ
+ Claire     | Heidenreich | (800) 727-6512 | M      | AZ
+ Jocelyn    | Kling       |                | M      | AZ
+ Trystan    | Vandervort  | 855-931-5047   | M      | AZ
+ Fern       | Corwin      | 888.425.3577   | M      | AZ
+ Boyd       | Russel      | 866-944-3785   | M      | AZ
+ Irwin      | Rodriguez   | 866-815-2420   | M      | AZ
+ Heber      | Reichel     | 888-670-3555   | M      | AZ
+            |             |                | M      | AZ
+ Terrell    | Gleichner   | (888) 418-7114 | M      | AZ
+ Lorenzo    | Collier     | 866.208.1449   | M      | AZ
+            |             |                | F      | NM
+ Rylan      | Lindgren    | 866.763.8234   | M      | AZ
+ Leta       | Cronin      | 855-261-6874   | F      | NM
+ Burley     | Berge       | 877-301-9876   | M      | AZ
+ Kale       | Spencer     | 1-800-570-1180 | M      | AZ
+ Armand     | Predovic    | 800-531-8319   | M      | AZ
+ Otis       | Hirthe      | 1-888-972-6862 | M      | AZ
+ Hubert     | Nikolaus    | 1-877-287-0026 | M      | AZ
+ Brad       | Dicki       | 877-799-4305   | M      | AZ
+            |             |                | M      | AZ
+ Hiram      | Rowe        | 800.517.3696   | M      | AZ
+            |             |                | M      | AZ
+ Alberto    | Mann        | 855.643.8444   | M      | AZ
+ Domingo    | Hyatt       | 1-877-329-9732 | M      | AZ
+ Orville    | Durgan      | 1-800-319-9029 | M      | AZ
+ Michel     | Heathcote   | 1-877-481-6460 | M      | AZ
+ Dee        | Ebert       | 888-461-6205   | M      | AZ
+ Lowell     | Carter      | 1-800-687-6510 | M      | AZ
+ Mitchell   | Hoppe       | 866.516.8544   | M      | AZ
+ Abdullah   | Murphy      | 877-258-6830   | M      | AZ
+            |             |                | M      | AZ
+ Cleo       | Reichel     | 1-866-907-8091 | M      | AZ
+ Agustin    | Murphy      | 866-939-3373   | M      | AZ
+ Joel       | Purdy       | 1-800-956-2222 | M      | AZ
+ Ahmad      | Spinka      | 1-877-945-2295 | M      | AZ
+ Karson     | Wehner      | 1-855-315-4672 | M      | AZ
+ Camille    | Kiehn       |                | F      | NM
+ Jovanny    | Reinger     | 1-855-449-6304 | M      | AZ
+ Kaleb      | Gleichner   | 888-237-5541   | M      | AZ
+ Roel       | Bode        | 888.763.3133   | M      | AZ
+ Reyes      | Cummerata   | 1-855-658-8079 | M      | AZ
+ Keeley     | Glover      | (866) 610-6384 | M      | AZ
+ Henry      | Pollich     | (888) 669-6603 | M      | AZ
+ Emilio     | Jakubowski  | 844-439-8873   | M      | AZ
+ Philip     | Wehner      | 888-986-1441   | M      | AZ
+ Hector     | Parisian    | 1-866-276-8031 | M      | AZ
+ Eldred     | Shields     | 877-238-8925   | M      | AZ
+ Amani      | Ferry       | 866-900-4985   | M      | AZ
+ Emmanuel   | Russel      | 877-975-2951   | M      | AZ
+ Leone      | Cremin      | 888-422-3821   | M      | AZ
+ Randi      | Reilly      | 1-855-312-1014 | M      | AZ
+ Toby       | Kilback     | (866) 732-7468 | M      | AZ
+ Keeley     | Stanton     | 800.621.0245   | M      | AZ
+(100 rows)
