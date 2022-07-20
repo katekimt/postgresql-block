@@ -270,30 +270,31 @@ newdatabase=# SELECT physical_address1, physical_zip FROM member_applications WH
  12192 Patsy Lock                 | 55359
 (5 rows)
 
-newdatabase=# SELECT id, first_name, email FROM member_applications WHERE receive_notifications = false AND  email = '' AND first_name != ''  ORDER BY first_name ASC LIMIT 20;
-  id  | first_name | email
-------+------------+-------
- 8019 | Aaliyah    |
-  782 | Aaron      |
- 7159 | Abagail    |
- 2029 | Abagail    |
- 2580 | Abbey      |
- 2719 | Abbey      |
- 7481 | Abbie      |
- 1594 | Abbie      |
- 8102 | Abbie      |
- 3639 | Abbie      |
- 1046 | Abbie      |
- 1273 | Abbigail   |
- 5483 | Abbigail   |
- 3155 | Abbigail   |
- 7295 | Abby       |
- 3448 | Abby       |
- 2971 | Abby       |
- 6010 | Abdiel     |
- 1864 | Abdiel     |
- 3039 | Abdul      |
+newdatabase=# SELECT id, first_name, email, receive_notifications FROM member_applications WHERE receive_notifications = false AND  email != '' AND first_name != ''  ORDER BY first_name ASC LIMIT 20;
+  id  | first_name |               email               | receive_notifications 
+------+------------+-----------------------------------+-----------------------
+ 8433 | Abbie      | jamel58@gmail.com                 | f
+ 8171 | Abbie      | lemuel.sawayn@yahoo.com           | f
+ 3124 | Abbigail   | wilkinson.jessika@satterfield.com | f
+  687 | Abbigail   | wilber.bayer@weissnat.com         | f
+  887 | Abdullah   | cummings.walton@white.com         | f
+ 6259 | Abigale    | moen.estevan@von.com              | f
+ 5435 | Abigayle   | torrey.hickle@gmail.com           | f
+  751 | Abner      | harold04@yahoo.com                | f
+ 5765 | Abner      | lpagac@steuber.com                | f
+ 4109 | Ada        | nlubowitz@hotmail.com             | f
+ 7827 | Adela      | shany.monahan@hotmail.com         | f
+ 3345 | Adele      | reilly.precious@yahoo.com         | f
+ 6553 | Adella     | mireille56@yahoo.com              | f
+ 7920 | Adelle     | ana.schroeder@gmail.com           | f
+ 8272 | Adolf      | ruecker.keyon@yahoo.com           | f
+ 8114 | Adolfo     | margarete.raynor@gmail.com        | f
+  845 | Adolphus   | runolfsson.betty@paucek.com       | f
+ 3606 | Adonis     | van69@hotmail.com                 | f
+ 8143 | Adriel     | lauryn.wisoky@hotmail.com         | f
+ 3198 | Adrien     | emmet.bechtelar@murphy.com        | f
 (20 rows)
+
 
 newdatabase=# SELECT first_name,  last_name, phone FROM member_applications WHERE phone LIKE '%123';
  first_name | last_name |     phone
