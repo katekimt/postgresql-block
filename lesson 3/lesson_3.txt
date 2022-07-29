@@ -1,0 +1,93 @@
+1. lesson_3=# DROP TABLE user_data;
+   lesson_3=# DROP TABLE user_discounts;
+   lesson_3=# DROP TABLE discounts;
+
+2. lesson_3=# TRUNCATE TABLE orders;
+   lesson_3=# TRUNCATE TABLE product_categories;
+   lesson_3=# TRUNCATE TABLE products;
+   lesson_3=# TRUNCATE TABLE user_addresses;
+
+3.lesson_3=# INSERT INTO users VALUES(1, 'Kate', 'kate@gmail.com');
+  lesson_3=# INSERT INTO users VALUES(2, 'Dima', 'dima@gmail.com');
+  lesson_3=# INSERT INTO users VALUES(3, 'Nika', 'nika@gmail.com');
+  lesson_3=# INSERT INTO users VALUES(4, 'Bob', 'bob@gmail.com');
+
+4. lesson_3=# INSERT INTO user_addresses VALUES (1, 'st. Volkovo 5', 'waiting', '12345', 1);
+   lesson_3=# INSERT INTO user_addresses VALUES (2, 'st. Volkovo 2', 'waiting', '1fre4', 2);
+   lesson_3=# INSERT INTO user_addresses VALUES (3, 'st. Volkovo 3', 'delivered', '1f224', 3);
+   lesson_3=# INSERT INTO user_addresses VALUES (4, 'st. Volkovo 8', 'delivered', '1kke4', 4);
+
+5. lesson_3=# INSERT INTO product_categories (id,name) VALUES (1,'skirts');
+   lesson_3=# INSERT INTO product_categories (id,name) VALUES (2,'dresses');
+
+6. lesson_3=# INSERT INTO products (id,name,price,description,category_id) VALUES (1,'long skirt', 200,'long', 1);
+   lesson_3=# INSERT INTO products (id,name,price,description,category_id) VALUES (2,'black skirt', 150,'black', 1);
+   lesson_3=# INSERT INTO products (id,name,price,description,category_id) VALUES (3,'shirt dress', 300,'shirt', 2);
+   lesson_3=# INSERT INTO products (id,name,price,description,category_id) VALUES (4,'white dress', 500,'white', 2);
+
+7. CREATE TABLE IF NOT EXISTS public.product_categories
+   (
+       id integer NOT NULL DEFAULT nextval('product_categories_id_seq'::regclass),
+       name character varying COLLATE pg_catalog."default" NOT NULL,
+       parent_id integer,
+       CONSTRAINT product_categories_pkey PRIMARY KEY (id)
+   )
+
+8. lesson_3=# INSERT INTO orders VALUES(1, 1, '2022-06-07',1);
+   lesson_3=# INSERT INTO orders VALUES(2, 2, '2022-06-07',2);
+   lesson_3=# INSERT INTO orders VALUES(3, 3, '2022-06-10',3);
+   lesson_3=# INSERT INTO orders VALUES(4, 4, '2022-07-22',4);
+
+9. SELECT users.name, user_addresses.address FROM users
+   INNER JOIN user_addresses
+   ON users.id = user_addresses.user_id;
+
+10. SELECT users.name, user_addresses.address FROM users
+    INNER JOIN user_addresses
+    ON users.id = user_addresses.user_id
+    WHERE users.id = 1;
+
+11. SELECT products.name, product_categories.name AS category FROM products
+        RIGHT JOIN product_categories
+        ON products.category_id = product_categories.id;
+
+12. SELECT products.name, product_categories.name AS category FROM products
+        RIGHT JOIN product_categories
+        ON products.category_id = product_categories.id;
+
+13. SELECT products.name, product_categories.name AS category FROM products
+        RIGHT JOIN product_categories
+        ON products.category_id = product_categories.id
+    	WHERE product_categories.id = 3;
+
+14. lesson_3=#  INSERT INTO categories  VALUES(1, 'men clothing');
+    lesson_3=#  INSERT INTO categories  VALUES(2, 'women clothing');
+    SELECT product_categories.name, categories.category AS name FROM product_categories
+            RIGHT JOIN categories
+            ON product_categories.parent_id = categories.id
+            WHERE categories.id = 2;
+
+15. SELECT products.name, product_categories.name AS category, categories.category AS parent_caregoty FROM products
+            RIGHT JOIN product_categories
+            ON products.category_id = product_categories.id
+    		RIGHT JOIN categories
+            ON product_categories.parent_id = categories.id;
+
+16. SELECT orders.id , users.name FROM orders
+            RIGHT JOIN users
+            ON orders.user_id = users.id
+    		WHERE age(CURRENT_DATE, '2022-06-21') >age(CURRENT_DATE, orders.order_date);
+
+17. SELECT products.name , products.price, order_products.quantity FROM products
+    	JOIN order_products
+        ON products.id = order_products.product_id ;
+
+19. SELECT users.name, SUM (order_products.quantity*products.price) FROM users
+    JOIN orders
+    ON orders.user_id = users.id
+    JOIN order_products
+    ON orders.id = order_products.order_id
+    JOIN products
+    ON order_products.product_id = products.id
+    GROUP BY users.id;
+
