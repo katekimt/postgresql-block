@@ -1,0 +1,114 @@
+1. CREATE TABLE IF NOT EXISTS public.discounts
+   (
+       id integer NOT NULL,
+       name character varying(100) COLLATE pg_catalog."default" NOT NULL,
+       type text COLLATE pg_catalog."default" NOT NULL,
+       amount integer NOT NULL,
+       CONSTRAINT discounts_pkey PRIMARY KEY (id)
+   )
+
+2. CREATE TABLE IF NOT EXISTS public.inf_discounts
+   (
+       user_discounts integer NOT NULL,
+       user_id integer NOT NULL,
+       discount_id integer NOT NULL,
+       expiration_date date NOT NULL
+   )
+
+3. lesson_3=# SELECT * FROM discounts;
+    id |    name     |   type   | amount
+   ----+-------------+----------+--------
+     1 | first order | one-time |     20
+     3 | all orders  | bulk     |     10
+     2 | all orders  | bulk     |      5
+   (3 rows)
+
+4.SELECT users.id, users.name, order_products.quantity FROM orders
+      	JOIN users
+        ON  orders.user_id = users.id
+  		JOIN order_products
+        ON orders.id = order_products.order_id;
+
+5.SELECT users.id, users.name,
+    (SELECT  COUNT (order_products.quantity) FROM order_products GROUP BY order_products.quantity) as quantity
+    FROM users;
+
+6.SELECT users.id, users.name, order_products.quantity, CASE
+              WHEN  order_products.quantity=0 THEN  '-20%'
+              WHEN order_products.quantity=1 THEN '-5%'
+  			  ELSE '-10%'
+         	  END as sales FROM orders
+        	  JOIN users
+              ON  orders.user_id = users.id
+    		  JOIN order_products
+              ON orders.id = order_products.order_id;
+
+              SELECT users.name, users.id, orders_quantity, discounts.id AS discounts_id
+              FROM (SELECT count(orders.id) AS orders_quantity, orders.user_id
+              	FROM orders
+              	GROUP BY orders.user_id
+              ) AS ord
+              JOIN users ON ord.user_id = users.id
+              JOIN discounts ON CASE
+              	WHEN ord.orders_quantity IN (0, null) THEN discounts.id =1
+              	WHEN ord.orders_quantity = 1 THEN discounts.id =2
+              	WHEN ord.orders_quantity > 1 THEN discounts.id =3
+              	END;
+
+7. CREATE VIEW user_discounts_view AS SELECT users.id, users.name, order_products.quantity, CASE
+               WHEN  order_products.quantity=0 THEN  '-20%'
+               WHEN order_products.quantity=1 THEN '-5%'
+   			   ELSE '-10%'
+          	   END as sales FROM orders
+         	   JOIN users
+               ON  orders.user_id = users.id
+     		   JOIN order_products
+               ON orders.id = order_products.order_id;
+
+   CREATE VIEW user_discounts_view_2 AS
+               SELECT users.name, users.id, orders_quantity, discounts.id AS discounts_id
+               FROM (SELECT count(orders.id) AS orders_quantity, orders.user_id
+               	FROM orders
+               	GROUP BY orders.user_id
+               ) AS ord
+               JOIN users ON ord.user_id = users.id
+               JOIN discounts ON CASE
+               	WHEN ord.orders_quantity IN (0, null) THEN discounts.id =1
+               	WHEN ord.orders_quantity = 1 THEN discounts.id =2
+               	WHEN ord.orders_quantity > 1 THEN discounts.id =3
+               	END;
+
+9. SELECT user_discounts_view_2.id, user_discounts_view_2.name, discounts.name
+   FROM user_discounts_view_2
+   JOIN discounts
+   ON  user_discounts_view_2.discounts_id = discounts.id;
+
+10. CREATE TABLE IF NOT EXISTS public.invoices
+    (
+        id integer NOT NULL,
+        user_id integer NOT NULL,
+        user_name character varying COLLATE pg_catalog."default" NOT NULL,
+        dicscount_name character varying COLLATE pg_catalog."default" NOT NULL,
+        order_date date NOT NULL,
+        order_total integer NOT NULL,
+        discount_amount integer NOT NULL,
+        total_after_discount integer NOT NULL,
+        CONSTRAINT invoices_pkey PRIMARY KEY (id)
+    )
+
+    TABLESPACE pg_default;
+
+    ALTER TABLE IF EXISTS public.invoices
+        OWNER to kate_kimt;
+
+11. SELECT users.id, users.name,
+    SUM (order_products.quantity) * products.price AS total_amounts FROM orders
+          	JOIN users
+            ON  orders.user_id = users.id
+    		JOIN order_products
+    		ON order_id = orders.id
+    		JOIN products
+    		ON order_products.product_id = products.id
+    		GROUP BY products.id, users.id;
+
+
