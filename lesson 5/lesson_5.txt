@@ -1,0 +1,39 @@
+1. CREATE INDEX EIndex ON users(email);
+
+2. SELECT DISTINCT ON (sel.user_id) sel.user_id, sel.address, sel.state, sel.postcode,  sel.orders_count, sel.total_price  FROM
+   (SELECT
+   user_addresses.user_id,
+   user_addresses.address,
+   user_addresses.state,
+   user_addresses.postcode,
+   count (orders.id) AS orders_count, SUM(products.price * order_products.quantity) AS total_price FROM user_addresses
+   JOIN orders ON orders.user_address_id = user_addresses.id
+   JOIN order_products ON orders.id = order_products.order_id
+   JOIN products ON order_products.product_id = products.id
+   GROUP BY orders.user_address_id, user_addresses.id
+   ORDER BY orders_count DESC, total_price DESC
+   ) sel
+   JOIN users ON users.id = sel.user_id
+   WHERE sel.user_id = users.id;
+
+
+3. CREATE TABLE IF NOT EXISTS public.employees
+   (
+       id integer NOT NULL,
+       name character varying COLLATE pg_catalog."default" NOT NULL,
+       email character varying COLLATE pg_catalog."default" NOT NULL,
+       salary integer NOT NULL,
+       CONSTRAINT employees_pkey PRIMARY KEY (id)
+   )
+
+   CREATE TABLE IF NOT EXISTS public.role
+   (
+       id integer NOT NULL,
+       employee_id integer NOT NULL,
+       role text COLLATE pg_catalog."default" NOT NULL,
+       categories_id integer NOT NULL,
+       CONSTRAINT role_pkey PRIMARY KEY (id)
+   )
+
+4. DELETE  FROM employees;
+   UPDATE employees SET id = DEFAULT;
